@@ -7,3 +7,10 @@ const phraseToGuess = document.querySelector('#phrase');
 //Set lives lost to missed.
 let missed = 0;
 
+//Add a click event to start
+start.addEventListener('click', () => {
+//Hide the "while of success" screen when start button is clicked
+    const overLay = document.querySelector('#overlay');
+    overLay.style.display = 'none';
+})
+console.log(onScreenKeys);   
