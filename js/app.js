@@ -18,6 +18,7 @@ const getRandomPhrasesArray = ([arr]) => {
     return [...randomPHrase];
 }
 
+//Set return value of getRandomPhrasesArray to phraseToDisplay variable.
 const phraseToDisplay = getRandomPhrasesArray(phrases);
 
 //Function addPhraseToDisplay expects array for argument.
@@ -37,6 +38,31 @@ const addPhraseToDisplay = (arr) => {
     });   
 }
 
+//Call addPhraseToDisplay with phraseToDisplay.
+addPhraseToDisplay(phraseToDisplay);
+
+//Higher-order function checkLetter.
+const checkLetter = (clicked) => {
+//Set all li elements with className letter to letter variable.
+    let letters = phraseToGuess.querySelectorAll('.letter');
+    let match;
+//return an anonymous function to keep the scope variables functional.
+    return () => {
+//Loop through all li elements
+        for(let value of letters) {
+ //Return one that match the condition           
+            if(value.textContent === clicked) {
+                value.classList.add('show');
+                match = value;
+                return match;
+ //Return null, if otherwise.               
+            } else {
+                return null;
+            }
+        }
+    }
+}
+
 
 //Add a click event to start
 start.addEventListener('click', () => {
@@ -44,4 +70,4 @@ start.addEventListener('click', () => {
     const overLay = document.querySelector('#overlay');
     overLay.style.display = 'none';
 })
-console.log(addPhraseToDisplay(phraseToDisplay));   
+console.log(phraseToGuess);   
