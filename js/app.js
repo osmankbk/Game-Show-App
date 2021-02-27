@@ -41,51 +41,60 @@ const addPhraseToDisplay = (arr) => {
 //Call addPhraseToDisplay with phraseToDisplay.
 addPhraseToDisplay(phraseToDisplay);
 
-//Higher-order function checkLetter.
+//Function checkLetter.
 const checkLetter = (clicked) => {
 //Set all li elements with className letter to letter variable.
     let letters = phraseToGuess.querySelectorAll('.letter');
     let letterFound;
 //return an anonymous function to keep the scope variables functional.
-    return () => {
 //Loop through all li elements
         letters.forEach( value => {
  //Return one that match the condition           
-            if(value.textContent === clicked) {
+            if(value.textContent.toLocaleLowerCase() === clicked) {
                 value.classList.add('show');
-                letterFound = value;
+                letterFound = clicked;
                 return letterFound;
  //Return null, if otherwise.               
             } else {
                 return null;
             }
         });
+        return letterFound;
+}
+
+//Function missedGuesses. 
+const missedGuesses = (letterValue) => {
+//Get all heart img elements & set them to lives.
+    let lives = document.querySelectorAll('.tries img');
+//Set lives to lostHeart if guess is wrong.   
+    if(!letterValue){
+        lives[missed].src = 'images/lostHeart.png';
+        missed += 1;
     }
 }
 
-//Add a click event
+//Add a click event.
 onScreenKeys.addEventListener('click', (e) => {
+
 //Event delgation with if statement
        if(e.target.tagName === 'BUTTON'){
 //Set textContent of clicked button to clicked 
-           let clicked = e.target.textContent;
-//Add chose class to it
+           let clicked = e.target.textContent.toLocaleLowerCase();
+//Add chosen class to it
            e.target.classList.add('chosen');
 //Disabled it
            e.target.disabled = 'true';
-//Use clicked variable as argument to checkLetter function
-           checkLetter(clicked);
-       }
+//Use clicked variable as argument to checkLetter function.
+           const checkLetterValue = checkLetter(clicked);
+//Call missedGuesses on click. 
+           missedGuesses(checkLetterValue);
+       }       
 });
 
 
-//Event for physical keyboard
 document.addEventListener('keydown', (e) => {
-//Set all onScreenkeys to physicalKeys    
     let physicalKeys = onScreenKeys.querySelectorAll('button');
-//Iterate through all of them.
         physicalKeys.forEach(key => {
-//Check if the letter of the key push match the 
             if(key.innerHTML === event.key) {
                 key.classList.add('chosen');
                 key.disabled = 'true';
