@@ -49,7 +49,7 @@ const checkLetter = (clicked) => {
 //return an anonymous function to keep the scope variables functional.
     return () => {
 //Loop through all li elements
-        for(let value of letters) {
+        letters.forEach( value => {
  //Return one that match the condition           
             if(value.textContent === clicked) {
                 value.classList.add('show');
@@ -59,7 +59,7 @@ const checkLetter = (clicked) => {
             } else {
                 return null;
             }
-        }
+        });
     }
 }
 
@@ -81,8 +81,11 @@ onScreenKeys.addEventListener('click', (e) => {
 
 //Event for physical keyboard
 document.addEventListener('keydown', (e) => {
+//Set all onScreenkeys to physicalKeys    
     let physicalKeys = onScreenKeys.querySelectorAll('button');
+//Iterate through all of them.
         physicalKeys.forEach(key => {
+//Check if the letter of the key push match the 
             if(key.innerHTML === event.key) {
                 key.classList.add('chosen');
                 key.disabled = 'true';
@@ -93,7 +96,7 @@ document.addEventListener('keydown', (e) => {
 
 //Add a click event to start
 start.addEventListener('click', () => {
-//Hide the "while of success" screen when start button is clicked
+//Hide the "wheel of success" screen when start button is clicked
     const overLay = document.querySelector('#overlay');
     overLay.style.display = 'none';
 })
