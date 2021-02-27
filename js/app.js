@@ -93,12 +93,20 @@ onScreenKeys.addEventListener('click', (e) => {
 
 
 document.addEventListener('keydown', (e) => {
+//Get all buttons from on screen keyboard.
     let physicalKeys = onScreenKeys.querySelectorAll('button');
+//Iterate through all the buttons,
         physicalKeys.forEach(key => {
+//If the pushed button match a phrase letter,
             if(key.innerHTML === event.key) {
+//Give it a chosen class,
                 key.classList.add('chosen');
+//Disabled it,
                 key.disabled = 'true';
-                checkLetter(key.textContent);
+//& call the checkLetter func to display the letter in the phrase. Set the value of checkLetter to CheckLetterValue
+                const checkLetterValue = checkLetter(key.textContent);
+//Call the missedGuesses func and pass it the CheckLetterValue as argument;
+                missedGuesses(checkLetterValue);
             }
         })
 });
