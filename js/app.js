@@ -1,7 +1,7 @@
 //Set start game button to start variable
 const start = document.querySelector('.start');
 //Set onscreen keyboard keys container to onScreenKeys.
-const onScreenKeys = document.querySelectorAll('#qwerty');
+const onScreenKeys = document.querySelector('#qwerty');
 //Set guessing pharase to phraseToGuess.
 const phraseToGuess = document.querySelector('#phrase');
 //Set lives lost to missed.
@@ -45,7 +45,7 @@ addPhraseToDisplay(phraseToDisplay);
 const checkLetter = (clicked) => {
 //Set all li elements with className letter to letter variable.
     let letters = phraseToGuess.querySelectorAll('.letter');
-    let match;
+    let letterFound;
 //return an anonymous function to keep the scope variables functional.
     return () => {
 //Loop through all li elements
@@ -53,8 +53,8 @@ const checkLetter = (clicked) => {
  //Return one that match the condition           
             if(value.textContent === clicked) {
                 value.classList.add('show');
-                match = value;
-                return match;
+                letterFound = value;
+                return letterFound;
  //Return null, if otherwise.               
             } else {
                 return null;
@@ -63,6 +63,33 @@ const checkLetter = (clicked) => {
     }
 }
 
+//Add a click event
+onScreenKeys.addEventListener('click', (e) => {
+//Event delgation with if statement
+       if(e.target.tagName === 'BUTTON'){
+//Set textContent of clicked button to clicked 
+           let clicked = e.target.textContent;
+//Add chose class to it
+           e.target.classList.add('chosen');
+//Disabled it
+           e.target.disabled = 'true';
+//Use clicked variable as argument to checkLetter function
+           checkLetter(clicked);
+       }
+});
+
+
+//Event for physical keyboard
+document.addEventListener('keydown', (e) => {
+    let physicalKeys = onScreenKeys.querySelectorAll('button');
+        physicalKeys.forEach(key => {
+            if(key.innerHTML === event.key) {
+                key.classList.add('chosen');
+                key.disabled = 'true';
+                checkLetter(key);
+            }
+        })
+});
 
 //Add a click event to start
 start.addEventListener('click', () => {
