@@ -89,7 +89,7 @@ document.addEventListener('keydown', (e) => {
             if(key.innerHTML === event.key) {
                 key.classList.add('chosen');
                 key.disabled = 'true';
-                checkLetter(key);
+                checkLetter(key.textContent);
             }
         })
 });
