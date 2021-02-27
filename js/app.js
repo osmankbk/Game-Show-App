@@ -7,7 +7,7 @@ const phraseToGuess = document.querySelector('#phrase');
 //Set lives lost to missed.
 let missed = 0;
 
-//function getRandomPhrasesArray
+//Function getRandomPhrasesArray
 //pass in iterable elements(array);
 const getRandomPhrasesArray = ([arr]) => {
 //Get random number from 0 to the length of array    
@@ -18,10 +18,30 @@ const getRandomPhrasesArray = ([arr]) => {
     return [...randomPHrase];
 }
 
+const phraseToDisplay = getRandomPhrasesArray(phrases);
+
+//Function addPhraseToDisplay expects array for argument.
+const addPhraseToDisplay = (arr) => {
+//For each character in array   
+    arr.forEach(item => {
+//Create an li element
+        let li = document.createElement('li');
+//Put item in the created li element
+        li.innerHTML = item;
+//Append li element to the ul(phrase) element.
+        phraseToGuess.appendChild(li);
+//If letter is not a space
+        if(item !== ' ') {
+            li.classList.add('letter');
+        }
+    });   
+}
+
+
 //Add a click event to start
 start.addEventListener('click', () => {
 //Hide the "while of success" screen when start button is clicked
     const overLay = document.querySelector('#overlay');
     overLay.style.display = 'none';
 })
-console.log(getRandomPhrasesArray(phrases));   
+console.log(addPhraseToDisplay(phraseToDisplay));   
