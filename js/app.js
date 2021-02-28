@@ -2,8 +2,8 @@
 const start = document.querySelector('.start');
 //Set onscreen keyboard keys container to onScreenKeys.
 const onScreenKeys = document.querySelector('#qwerty');
-//Set guessing pharase to phraseToGuess.
-const phraseToGuess = document.querySelector('#phrase');
+//Set guessing pharase to liLettersParent.
+const liLettersParent = document.querySelector('#phrase');
 //Set lives lost to missed.
 let missed = 0;
 
@@ -19,9 +19,6 @@ const getRandomPhrasesArray = ([arr]) => {
 //End function
 }
 
-//Set return value of getRandomPhrasesArray to phraseToDisplay variable.
-const phraseToDisplay = getRandomPhrasesArray(phrases);
-
 //Function addPhraseToDisplay expects array for argument.
 const addPhraseToDisplay = (arr) => {
 //For each character in array   
@@ -31,7 +28,7 @@ const addPhraseToDisplay = (arr) => {
 //Put item in the created li element
         li.innerHTML = item;
 //Append li element to the ul(phrase) element.
-        phraseToGuess.appendChild(li);
+        liLettersParent.appendChild(li);
 //If letter is not a space
         if(item !== ' ') {
             li.classList.add('letter');
@@ -40,13 +37,12 @@ const addPhraseToDisplay = (arr) => {
 //End function
 }
 
-//Call addPhraseToDisplay with phraseToDisplay.
-addPhraseToDisplay(phraseToDisplay);
+
 
 //Function checkLetter.
 const checkLetter = (clicked) => {
 //Set all li elements with className letter to letter variable.
-    let letters = phraseToGuess.querySelectorAll('.letter');
+    let letters = liLettersParent.querySelectorAll('.letter');
     let letterFound;
 //return an anonymous function to keep the scope variables functional.
 //Loop through all li elements
@@ -81,15 +77,12 @@ const missedGuesses = (letterValue) => {
 const resetGame = () => {
 //Set lives img to live.
     let lives = document.querySelectorAll('.tries img');
-//Set ul to ulElement.
-    let ulElement = document.querySelector('ul');
 //Set all phrase letter(li) to liElements.
-    const liElements = phraseToGuess.querySelectorAll('li');
+    const liElements = liLettersParent.querySelectorAll('li');
 //Set all all buttons to buttons
     const buttons = onScreenKeys.querySelectorAll('button');
 //Reset the phrase letters 
-    ulElement.innerHTML = '';
-    console.log(ulElement);
+    liLettersParent.innerHTML = '';
 //Reset score
     missed = 0;
 //Reset the chosen class given to clicked buttons & enabled them.
@@ -115,9 +108,9 @@ const CheckWin = () => {
 //Set Start button(a anchor) to reset.
     const reset = document.querySelector('a');
 //Set li elements with letter class to letters.
-    const letters = phraseToGuess.querySelectorAll('.letter');
+    const letters = liLettersParent.querySelectorAll('.letter');
 //Set li elements with show class to letters.
-    const show = phraseToGuess.querySelectorAll('.show');
+    const show = liLettersParent.querySelectorAll('.show');
 //If missed variable is more than 4, show the lose overlay.
     if(missed > 4) {
         reset.textContent = 'Try Again';
@@ -137,8 +130,7 @@ const CheckWin = () => {
 //End function       
 }
 
-
-//Add a click event.
+//Add a click event to screen keyboard.
 onScreenKeys.addEventListener('click', (e) => {
 //Event delgation with if statement
        if(e.target.tagName === 'BUTTON'){
@@ -154,12 +146,13 @@ onScreenKeys.addEventListener('click', (e) => {
            missedGuesses(checkLetterValue);
 //Call checkWin func on each click to determine win or lose.
            CheckWin();
-           console.log(e.target);
        } 
 //End event
 });
 
+//Add a click event to physical keyboard.
 document.addEventListener('keydown', (e) => {
+    //Disable keyboard activity when the ovelay screen is visible.
     if(document.getElementById('overlay').style.display === 'none') {
         //Get all buttons from on screen keyboard.
     let physicalKeys = onScreenKeys.querySelectorAll('button');
@@ -184,13 +177,16 @@ document.addEventListener('keydown', (e) => {
 //End event
 });
 
-
 //Add a click event to start
 start.addEventListener('click', (e) => {
 //Hide the "wheel of success" screen when start button is clicked
 if(e.target.tagName === 'A') {
     const overLay = document.querySelector('#overlay');
     overLay.style.display = 'none';
+    //Set return value of getRandomPhrasesArray to phraseToDisplay variable.
+    const phraseArray = getRandomPhrasesArray(phrases);
+    //Call addPhraseToDisplay with phraseToDisplay.
+    addPhraseToDisplay(phraseArray);
     }
 //End event 
 });
