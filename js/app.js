@@ -8,7 +8,7 @@ const liLettersParent = document.querySelector('#phrase');
 let missed = 0;
 //Function getRandomPhrasesArray
 //pass in iterable elements(array);
-const getRandomPhrasesArray = ([arr]) => {
+const getRandomPhrasesArray = ([]) => {
 	//Get random number from 0 to the length of array    
 	let randomNumber = Math.floor(Math.random() * phrases.length);
 	//Set the element of the array at the index of the random number to randomPhrase variable.
@@ -30,6 +30,8 @@ const addPhraseToDisplay = (arr) => {
 		//If letter is not a space
 		if (item !== ' ') {
 			li.classList.add('letter');
+		} else {
+			li.classList.add('space');
 		}
 	});
 	//End function
@@ -107,14 +109,14 @@ const CheckWin = () => {
 	if (missed > 4) {
 		reset.textContent = 'Try Again';
 		overLay.className = 'lose';
-		overLay.style.display = 'block';
+		overLay.style.display = 'flex';
 		resetGame();
 	} else {
 		//If the length of the letter & show class are equal, show the win overlay.
 		if (letters.length === show.length) {
 			reset.textContent = 'Play Again';
 			overLay.className = 'win';
-			overLay.style.display = 'block';
+			overLay.style.display = 'flex';
 			resetGame();
 		}
 	}
@@ -148,7 +150,7 @@ document.addEventListener('keydown', (e) => {
 		//Iterate through all the buttons,
 		physicalKeys.forEach(key => {
 			//If the pushed button match a phrase letter,
-			if (key.innerHTML === event.key) {
+			if (key.innerHTML === e.key) {
 				//Give it a chosen class,
 				key.classList.add('chosen');
 				//Disabled it,
