@@ -16,6 +16,7 @@ const getRandomPhrasesArray = ([arr]) => {
     let randomPHrase = phrases[randomNumber];
 //Make the randomPhrase iterable(array) with the spread operator and return it.
     return [...randomPHrase];
+//End function
 }
 
 //Set return value of getRandomPhrasesArray to phraseToDisplay variable.
@@ -36,6 +37,7 @@ const addPhraseToDisplay = (arr) => {
             li.classList.add('letter');
         }
     });   
+//End function
 }
 
 //Call addPhraseToDisplay with phraseToDisplay.
@@ -60,6 +62,7 @@ const checkLetter = (clicked) => {
             }
         });
         return letterFound;
+//End function
 }
 
 //Function missedGuesses. 
@@ -70,12 +73,73 @@ const missedGuesses = (letterValue) => {
     if(!letterValue){
         lives[missed].src = 'images/lostHeart.png';
         missed += 1;
-    }
+    } 
+//End function
 }
+
+//Function Reset
+const resetGame = () => {
+//Set lives img to live.
+    let lives = document.querySelectorAll('.tries img');
+//Set ul to ulElement.
+    let ulElement = document.querySelector('ul');
+//Set all phrase letter(li) to liElements.
+    const liElements = phraseToGuess.querySelectorAll('li');
+//Set all all buttons to buttons
+    const buttons = onScreenKeys.querySelectorAll('button');
+//Reset the phrase letters 
+    ulElement.innerHTML = '';
+    console.log(ulElement);
+//Reset score
+    missed = 0;
+//Reset the chosen class given to clicked buttons & enabled them.
+    buttons.forEach(button => {
+        button.classList.remove('chosen');
+        button.removeAttribute('disabled');
+    })
+//Reset the displayed phrase list.
+    liElements.forEach(li => {
+        li.classList.remove('show');
+    });
+//Reset live hearts.
+    lives.forEach(live => {
+        live.setAttribute('src', 'images/liveHeart.png');
+    });
+//End function
+}
+
+//Func CheckWin
+const CheckWin = () => {
+//Set overlay div to overlay.
+    const overLay = document.querySelector('#overlay');
+//Set Start button(a anchor) to reset.
+    const reset = document.querySelector('a');
+//Set li elements with letter class to letters.
+    const letters = phraseToGuess.querySelectorAll('.letter');
+//Set li elements with show class to letters.
+    const show = phraseToGuess.querySelectorAll('.show');
+//If missed variable is more than 4, show the lose overlay.
+    if(missed > 4) {
+        reset.textContent = 'Try Again';
+        overLay.className = 'lose';
+        overLay.style.display = 'block';
+        resetGame();
+
+       } else {
+//If the length of the letter & show class are equal, show the win overlay.
+           if(letters.length === show.length) {
+            reset.textContent = 'Play Again';
+            overLay.className = 'win';
+            overLay.style.display = 'block';
+            resetGame();
+           }
+       }
+//End function       
+}
+
 
 //Add a click event.
 onScreenKeys.addEventListener('click', (e) => {
-
 //Event delgation with if statement
        if(e.target.tagName === 'BUTTON'){
 //Set textContent of clicked button to clicked 
@@ -88,33 +152,46 @@ onScreenKeys.addEventListener('click', (e) => {
            const checkLetterValue = checkLetter(clicked);
 //Call missedGuesses on click. 
            missedGuesses(checkLetterValue);
-       }       
+//Call checkWin func on each click to determine win or lose.
+           CheckWin();
+           console.log(e.target);
+       } 
+//End event
 });
-
 
 document.addEventListener('keydown', (e) => {
-//Get all buttons from on screen keyboard.
+    if(document.getElementById('overlay').style.display === 'none') {
+        //Get all buttons from on screen keyboard.
     let physicalKeys = onScreenKeys.querySelectorAll('button');
-//Iterate through all the buttons,
-        physicalKeys.forEach(key => {
-//If the pushed button match a phrase letter,
-            if(key.innerHTML === event.key) {
-//Give it a chosen class,
-                key.classList.add('chosen');
-//Disabled it,
-                key.disabled = 'true';
-//& call the checkLetter func to display the letter in the phrase. Set the value of checkLetter to CheckLetterValue
-                const checkLetterValue = checkLetter(key.textContent);
-//Call the missedGuesses func and pass it the CheckLetterValue as argument;
-                missedGuesses(checkLetterValue);
-            }
-        })
+    //Iterate through all the buttons,
+            physicalKeys.forEach(key => {
+    //If the pushed button match a phrase letter,
+                if(key.innerHTML === event.key) {
+    //Give it a chosen class,
+                    key.classList.add('chosen');
+    //Disabled it,
+                    key.disabled = 'true';
+    //& call the checkLetter func to display the letter in the phrase. Set the value of checkLetter to CheckLetterValue
+                    const checkLetterValue = checkLetter(key.textContent);
+    //Call the missedGuesses func and pass it the CheckLetterValue as argument;
+                    missedGuesses(checkLetterValue);
+                }
+            })
+    //Call checkWin func on each click to determine win or lose.
+         CheckWin();
+        
+    }
+//End event
 });
 
+
 //Add a click event to start
-start.addEventListener('click', () => {
+start.addEventListener('click', (e) => {
 //Hide the "wheel of success" screen when start button is clicked
+if(e.target.tagName === 'A') {
     const overLay = document.querySelector('#overlay');
     overLay.style.display = 'none';
-})
-console.log(phraseToGuess);   
+    }
+//End event 
+});
+ 
