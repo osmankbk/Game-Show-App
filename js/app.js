@@ -4,7 +4,7 @@ const start = document.querySelector('.start');
 const onScreenKeys = document.querySelector('#qwerty');
 //Set guessing pharase to liLettersParent.
 const liLettersParent = document.querySelector('#phrase');
-//Set lives lost to missed.
+//Set lives lost to missed. Set it to 0.
 let missed = 0;
 
 //Function getRandomPhrasesArray
