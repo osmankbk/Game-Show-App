@@ -93,6 +93,9 @@ button {
 }
 
 .show {
+  /* Exceed Expectation */
+  transition: transform 1s cubic-bezier(1,-1.05,.04,1.51);;
+  transform: scaleY(1.5);
   color: #000;
   background-color: #76CE82;
 }
