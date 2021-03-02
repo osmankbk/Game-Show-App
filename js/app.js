@@ -131,7 +131,7 @@ onScreenKeys.addEventListener('click', (e) => {
 		//Add chosen class to it
 		e.target.classList.add('chosen');
 		//Disabled it
-		e.target.disabled = 'true';
+		e.target.setAttribute('disabled', true);
 		//Use clicked variable as argument to checkLetter function.
 		const checkLetterValue = checkLetter(clicked);
 		//Call missedGuesses on click. 
@@ -154,7 +154,7 @@ document.addEventListener('keydown', (e) => {
 				//Give it a chosen class,
 				key.classList.add('chosen');
 				//Disabled it,
-				key.disabled = 'true';
+				key.setAttribute('disabled', true);
 				//& call the checkLetter func to display the letter in the phrase. Set the value of checkLetter to CheckLetterValue
 				const checkLetterValue = checkLetter(key.textContent);
 				//Call the missedGuesses func and pass it the CheckLetterValue as argument;
