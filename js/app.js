@@ -28,11 +28,7 @@ const addPhraseToDisplay = (arr) => {
 		//Append li element to the ul(phrase) element.
 		liLettersParent.appendChild(li);
 		//If letter is not a space
-		if (item !== ' ') {
-			li.classList.add('letter');
-		} else {
-			li.classList.add('space');
-		}
+		item !== ' ' ? li.classList.add('letter') : li.classList.add('space');
 	});
 	//End function
 }
