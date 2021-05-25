@@ -1,5 +1,7 @@
 //Set start game button to start variable
 const start = document.querySelector('.start');
+//Set congratulations button to 
+const congrats = document.querySelector('.congrats');
 //Set onscreen keyboard keys container to onScreenKeys.
 const onScreenKeys = document.querySelector('#qwerty');
 //Set guessing pharase to liLettersParent.
@@ -37,7 +39,6 @@ const checkLetter = (clicked) => {
 	//Set all li elements with className letter to letter variable.
 	let letters = liLettersParent.querySelectorAll('.letter');
 	let letterFound;
-	//return an anonymous function to keep the scope variables functional.
 	//Loop through all li elements
 	letters.forEach(value => {
 		//Return one that match the condition           
@@ -105,13 +106,16 @@ const CheckWin = () => {
 	if (missed > 4) {
 		reset.textContent = 'Try Again';
 		overLay.className = 'lose';
+		congrats.textContent = "Better Luch Next Time!"
 		overLay.style.display = 'flex';
+		congrats.textContent = "Better Luck Next Time!"
 		resetGame();
 	} else {
 		//If the length of the letter & show class are equal, show the win overlay.
 		if (letters.length === show.length) {
 			reset.textContent = 'Play Again';
 			overLay.className = 'win';
+			congrats.textContent = "Congratulations, You Won!"
 			overLay.style.display = 'flex';
 			resetGame();
 		}
